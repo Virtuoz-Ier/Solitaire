@@ -158,7 +158,7 @@ public class Tray
 		return s;
 	}
 	
-	public String printLine()
+	public String printTray()
 	{
 		String s = "";
 		ArrayList<String> heart = getSign(this.hearts);
@@ -228,7 +228,7 @@ public class Tray
 	{
 		String s = "";
 		
-		s += printLine();
+		s += printTray();
 		
 		return s;
 	}
