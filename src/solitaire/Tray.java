@@ -152,6 +152,8 @@ public class Tray
 				}
 				this.setVisible();
 				this.nbTurns++;
+				if (fromDeck)
+					checkDeck();
 				return true;
 			}
 			else
@@ -173,6 +175,8 @@ public class Tray
 				}
 				this.setVisible();
 				this.nbTurns++;
+				if (fromDeck)
+					checkDeck();
 				return true;
 			}
 				
@@ -201,6 +205,8 @@ public class Tray
 				column.remove(index);
 				this.setVisible();
 				this.nbTurns++;
+				if (fromDeck)
+					checkDeck();
 				return true;
 			}
 			else
@@ -216,6 +222,8 @@ public class Tray
 				column.remove(index);
 				this.setVisible();
 				this.nbTurns++;
+				if (fromDeck)
+					checkDeck();
 				return true;
 			}
 				
@@ -229,6 +237,12 @@ public class Tray
 			return new String[] {"spade", "club"};
 		else
 			return new String[] {"heart", "diamond"};
+	}
+	
+	public void checkDeck()
+	{
+		if (this.deck_position == this.deck.size() && this.deck.size() > 0)
+			this.deck_position--;
 	}
 	
 	public boolean checkMoveToColumn(Card cardToMove, Card lastCardColumn)
