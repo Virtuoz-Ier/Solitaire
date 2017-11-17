@@ -146,7 +146,7 @@ public class Tray
 				{
 					columnToMove.add(column.get(i));
 				}
-				for (int i = index; i < index + nbCards; i++)
+				for (int i = index + nbCards - 1; i >= index ; i--)
 				{
 					column.remove(i);
 				}
@@ -167,7 +167,7 @@ public class Tray
 				{
 					columnToMove.add(column.get(i));
 				}
-				for (int i = index; i < index + nbCards; i++)
+				for (int i = index + nbCards - 1; i >= index ; i--)
 				{
 					column.remove(i);
 				}
@@ -198,7 +198,6 @@ public class Tray
 			if (cardToMove.getValue() == 1)
 			{
 				signToMove.add(cardToMove);
-				this.upDeck();
 				column.remove(index);
 				this.setVisible();
 				this.nbTurns++;
@@ -214,7 +213,6 @@ public class Tray
 			if (checkMoveToSign(cardToMove, lastCardSignToMove))
 			{
 				signToMove.add(cardToMove);
-				this.upDeck();
 				column.remove(index);
 				this.setVisible();
 				this.nbTurns++;

@@ -271,7 +271,7 @@ public class Cui
 		int options[] = this.getCuiOptions();
 		
 		int nb_cards = 1;
-		if (options.length > 3)
+		if (options.length == 3)
 			nb_cards = options[2];
 		
 		boolean fromDeck = false;
