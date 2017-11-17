@@ -5,36 +5,27 @@ import java.util.Collections;
 
 public class Tray
 {
-	private ArrayList<Card> cards;
+	private ArrayList<ArrayList<Card>> columns;
 	private ArrayList<Card> deck;
-	private ArrayList<Card> column1;
-	private ArrayList<Card> column2;
-	private ArrayList<Card> column3;
-	private ArrayList<Card> column4;
-	private ArrayList<Card> column5;
-	private ArrayList<Card> column6;
-	private ArrayList<Card> column7;
-	private ArrayList<Card> hearts;
-	private ArrayList<Card> diamonds;
-	private ArrayList<Card> spades;
-	private ArrayList<Card> clubs;
+	private ArrayList<ArrayList<Card>> signs;
 	private int deck_position;
+	private int nbTurns;
 	
 	public Tray()
 	{
-		cards = new ArrayList<Card>();
+		ArrayList<Card> cards = new ArrayList<Card>();
 		String signe = "";
 		
 		for (int i = 1; i <= 4; i++)
 		{
 			if (i == 1)
-				signe = "\u2661";
+				signe = "heart";
 			else if (i == 2)
-				signe = "\u2662";
+				signe = "diamond";
 			else if (i == 3)
-				signe = "\u2663";
+				signe = "spade";
 			else if (i == 4)
-				signe = "\u2660";
+				signe = "club";
 			
 			for (int j = 1; j <= 13; j++)
 			{
@@ -52,184 +43,220 @@ public class Tray
 		}
 		
 		this.deck_position = 0;
+		this.nbTurns = 0;
 		
-		this.hearts = new ArrayList<Card>();
-		this.diamonds = new ArrayList<Card>();
-		this.spades = new ArrayList<Card>();
-		this.clubs = new ArrayList<Card>();
-		
-		column1 = new ArrayList<Card>();
-		column2 = new ArrayList<Card>();
-		column3 = new ArrayList<Card>();
-		column4 = new ArrayList<Card>();
-		column5 = new ArrayList<Card>();
-		column6 = new ArrayList<Card>();
-		column7 = new ArrayList<Card>();
-		
-		for (int i = 25; i <= 52; i++)
-		{
-			if (i <= 25)
-				column1.add(cards.get(i - 1));
-			else if (i <= 27)
-				column2.add(cards.get(i - 1));
-			else if (i <= 30)
-				column3.add(cards.get(i - 1));
-			else if (i <= 34)
-				column4.add(cards.get(i - 1));
-			else if (i <= 39)
-				column5.add(cards.get(i - 1));
-			else if (i <= 45)
-				column6.add(cards.get(i - 1));
-			else if (i <= 52)
-				column7.add(cards.get(i - 1));
-		}
-
-		column1.get(column1.size() - 1).setVisible();
-		column2.get(column2.size() - 1).setVisible();
-		column3.get(column3.size() - 1).setVisible();
-		column4.get(column4.size() - 1).setVisible();
-		column5.get(column5.size() - 1).setVisible();
-		column6.get(column6.size() - 1).setVisible();
-		column7.get(column7.size() - 1).setVisible();
-	}
-
-	public ArrayList<String> getColumn(ArrayList<Card> column)
-	{
-		ArrayList<String> s;
-		
-		s = new ArrayList<String>();
-		
-		
-		for (int i = 0; i < column.size(); i++)
-		{
-			String[] data;
-			if (i == (column.size() - 1))
-				data = column.get(i).toString().split("\n");
-			else
-				data = column.get(i).littleCard().split("\n");
-			for (int j = 0; j < data.length; j++)
-				s.add(data[j]);
-		}
-		
-		return s;
-	}
-	
-	public ArrayList<String> getSign(ArrayList<Card> sign)
-	{
-		ArrayList<String> s = new ArrayList<String>();
-		String[] data;
-		
-		if (sign.size() > 0)
-		{
-			data = sign.get(sign.size() - 1).toString().split("\n");
-			for (int j = 0; j < data.length; j++)
-				s.add(data[j]);
-		}
-		else
-		{
-			s.add("-----");
-			s.add("|   |");
-			s.add("|   |");
-			s.add("-----");
-		}
-		
-		return s;
-	}
-	
-	public ArrayList<String> getDeck()
-	{
-		ArrayList<String> s = new ArrayList<String>();
-		String[] data;
-		
-		if (this.deck.size() > 0)
-		{
-			data = this.deck.get(this.deck_position).toString().split("\n");
-			for (int j = 0; j < data.length; j++)
-				s.add(data[j]);
-		}
-		else
-		{
-			s.add("-----");
-			s.add("|   |");
-			s.add("|   |");
-			s.add("-----");
-		}
-		
-		return s;
-	}
-	
-	public String printTray()
-	{
-		String s = "";
-		ArrayList<String> heart = getSign(this.hearts);
-		ArrayList<String> spade = getSign(this.spades);
-		ArrayList<String> diamond = getSign(this.diamonds);
-		ArrayList<String> club = getSign(this.clubs);
-		ArrayList<String> deck = getDeck();
-		
+		this.signs = new ArrayList<ArrayList<Card>>();
 		for (int i = 0; i < 4; i++)
+			this.signs.add(new ArrayList<Card>());
+		
+		this.columns = new ArrayList<ArrayList<Card>>();
+		for (int i = 0; i < 7; i++)
+			this.columns.add(new ArrayList<Card>());
+		
+		int start = 24;
+		
+		for (int j = 0; j < 7; j++)
 		{
-			s += deck.get(i) + "             ";
-			s += heart.get(i) + " ";
-			s += spade.get(i) + " ";
-			s += diamond.get(i) + " ";
-			s += club.get(i) + " ";
-			s += "\n";
+			for (int i = start; i < start + j + 1; i++)
+			{
+				this.columns.get(j).add(cards.get(i));
+			}
+			start = start + j + 1;
 		}
-		
-		s+= "\n";
-		
-		ArrayList<String> column_1 = getColumn(this.column1);
-		ArrayList<String> column_2 = getColumn(this.column2);
-		ArrayList<String> column_3 = getColumn(this.column3);
-		ArrayList<String> column_4 = getColumn(this.column4);
-		ArrayList<String> column_5 = getColumn(this.column5);
-		ArrayList<String> column_6 = getColumn(this.column6);
-		ArrayList<String> column_7 = getColumn(this.column7);
-		
-		for (int i = 0; i < column_7.size(); i++)
-		{
-			if (i < column_1.size())
-				s += column_1.get(i) + " ";
-			else
-				s += "      ";
-			if (i < column_2.size())
-				s += column_2.get(i) + " ";
-			else
-				s += "      ";
-			if (i < column_3.size())
-				s += column_3.get(i) + " ";
-			else
-				s += "      ";
-			if (i < column_4.size())
-				s += column_4.get(i) + " ";
-			else
-				s += "      ";
-			if (i < column_5.size())
-				s += column_5.get(i) + " ";
-			else
-				s += "      ";
-			if (i < column_6.size())
-				s += column_6.get(i) + " ";
-			else
-				s += "      ";
-			if (i < column_7.size())
-				s += column_7.get(i) + " ";
-			else
-				s += "      ";
-			
-			s += "\n";
-		}
-		
-		return s;
+	
+		this.setVisible();
 	}
-
-	public String toString()
+	
+	public void setVisible()
 	{
-		String s = "";
+		for (int i = 0; i < columns.size(); i++)
+		{
+			if (this.columns.get(i).size() != 0)
+				this.columns.get(i).get(this.columns.get(i).size() - 1).setVisible();
+		}
+			
+	}
+	
+	public ArrayList<Card> getColumn(int nbColumn)
+	{
+		return this.columns.get(nbColumn);
+	}
+	
+	public ArrayList<ArrayList<Card>> getAllColumns()
+	{
+		return this.columns;
+	}
+	
+	public ArrayList<Card> getDeck()
+	{
+		return this.deck;
+	}
+	
+	public int getDeckPosition()
+	{
+		return this.deck_position;
+	}
+	
+	public ArrayList<Card> getSign(int nbSign)
+	{
+		return this.signs.get(nbSign);
+	}
+	
+	public ArrayList<ArrayList<Card>> getAllSigns()
+	{
+		return this.signs;
+	}
+	
+	public int getNbTurns()
+	{
+		return this.nbTurns;
+	}
+	
+	public void upDeck()
+	{
+		if (this.deck_position == this.deck.size() - 1)
+			this.deck_position = 0;
+		else
+			this.deck_position++;
+	}
+	
+	public void upNbTurns()
+	{
+		this.nbTurns++;
+	}
+	
+	public boolean moveToColumn(int nbCards, ArrayList<Card> column, ArrayList<Card> columnToMove, boolean fromDeck)
+	{
+		if (column.size() == 0)
+			return false;
 		
-		s += printTray();
+		int index;
+		if (!fromDeck)
+			index = column.size() - nbCards;
+		else
+			index = this.deck_position;
 		
-		return s;
+		Card firstCardToMove =  column.get(index);
+		
+		if (columnToMove.size() == 0)
+		{
+			if (firstCardToMove.getValue() == 13)
+			{
+				for (int i = index; i < index + nbCards; i++)
+				{
+					columnToMove.add(column.get(i));
+				}
+				for (int i = index; i < index + nbCards; i++)
+				{
+					column.remove(i);
+				}
+				this.setVisible();
+				this.nbTurns++;
+				return true;
+			}
+			else
+				return false;
+		}
+		else
+		{
+			Card lastCardColumnToMove =  columnToMove.get(columnToMove.size() - 1);
+			
+			if (checkMoveToColumn(firstCardToMove, lastCardColumnToMove))
+			{
+				for (int i = index; i < index + nbCards; i++)
+				{
+					columnToMove.add(column.get(i));
+				}
+				for (int i = index; i < index + nbCards; i++)
+				{
+					column.remove(i);
+				}
+				this.setVisible();
+				this.nbTurns++;
+				return true;
+			}
+				
+			return false;
+		}
+	}
+	
+	public boolean moveToSign(ArrayList<Card> column, ArrayList<Card> signToMove, boolean fromDeck)
+	{
+		if (column.size() == 0)
+			return false;
+
+		int index;
+		if (!fromDeck)
+			index = column.size() - 1;
+		else
+			index = this.deck_position;
+		
+		Card cardToMove =  column.get(index);
+		
+		if (signToMove.size() == 0)
+		{
+			if (cardToMove.getValue() == 1)
+			{
+				signToMove.add(cardToMove);
+				this.upDeck();
+				column.remove(index);
+				this.setVisible();
+				this.nbTurns++;
+				return true;
+			}
+			else
+				return false;
+		}
+		else
+		{
+			Card lastCardSignToMove =  signToMove.get(signToMove.size() - 1);
+			
+			if (checkMoveToSign(cardToMove, lastCardSignToMove))
+			{
+				signToMove.add(cardToMove);
+				this.upDeck();
+				column.remove(index);
+				this.setVisible();
+				this.nbTurns++;
+				return true;
+			}
+				
+			return false;
+		}
+	}
+	
+	public String[] getOppositeSigns(Card card)
+	{
+		if (card.getSign().equals("heart") ||  card.getSign().equals("diamond"))
+			return new String[] {"spade", "club"};
+		else
+			return new String[] {"heart", "diamond"};
+	}
+	
+	public boolean checkMoveToColumn(Card cardToMove, Card lastCardColumn)
+	{
+		if (cardToMove.getSign().equals(getOppositeSigns(lastCardColumn)[0]) || cardToMove.getSign().equals(getOppositeSigns(lastCardColumn)[1]))
+			if (cardToMove.getValue() == (lastCardColumn.getValue() - 1))
+				return true;
+
+		return false;
+	}
+	
+	public boolean checkMoveToSign(Card cardToMove, Card lastCardSign)
+	{
+		if (cardToMove.getSign().equals(lastCardSign.getSign()))
+			if (cardToMove.getValue() == (lastCardSign.getValue() + 1))
+				return true;
+
+		return false;
+	}
+	
+	public boolean checkWin()
+	{
+		for (int i = 0; i < 4; i++)
+			if (signs.get(i).size() != 13)
+				return false;
+		
+		return true;
 	}
 }

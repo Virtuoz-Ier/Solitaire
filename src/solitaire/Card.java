@@ -3,13 +3,13 @@ package solitaire;
 public class Card
 {
 	private int value;
-	private String signe;
+	private String sign;
 	private boolean visible = false;
 
-	public Card(int value, String signe)
+	public Card(int value, String sign)
 	{
 		this.value = value;
-		this.signe = signe;
+		this.sign = sign;
 	}
 	
 	public int getValue()
@@ -17,51 +17,18 @@ public class Card
 		return this.value;
 	}
 	
-	public String getSigne()
+	public String getSign()
 	{
-		return this.signe;
+		return this.sign;
 	}
 	
-	public String getStringValue()
+	public boolean getVisible()
 	{
-		if (this.value == 1)
-			return "A";
-		else if (this.value == 11)
-			return "V";
-		else if (this.value == 12)
-			return "D";
-		else if (this.value == 13)
-			return "R";
-		else
-			return String.valueOf(this.value);
+		return this.visible;
 	}
 
 	public void setVisible()
 	{
 		this.visible = true;
-	}
-	
-	public String littleCard()
-	{
-		String s = "-----\n";
-		if (this.visible)
-			s += "|" + String.format("%-2s", this.getStringValue()) + this.getSigne() + "|\n";
-		else
-			s += "|   |\n";
-		
-		return s;
-	}
-	
-	public String toString()
-	{
-		String s = "-----\n";
-		if (this.visible)
-			s += "|" + String.format("%-2s", this.getStringValue()) + this.getSigne() + "|\n";
-		else
-			s += "|   |\n";
-		s += "|   |\n";
-		s += "-----\n";
-		
-		return s;
 	}
 }
